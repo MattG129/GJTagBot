@@ -10,8 +10,8 @@ const client = new Client({
 })
 
 client.on('ready', () => {
-	console.log('The bot is ready');
-})
+	console.log('The bot is online');
+}
 
 client.on('MessageCreate', message => {
 	if (message.content === 'Ping') {
