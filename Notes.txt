@@ -1,0 +1,2 @@
+What shall we do if a user edits in a tag to an already posted message
+Currently if you go back and edit an existing post to add another tag, it will not be tagged.
