@@ -4,7 +4,7 @@ const { Client, GatewayIntentBits } = require('discord.js');
 const jsdom = require('jsdom')
 const dom = new jsdom.JSDOM("")
 const $ = require('jquery')(dom.window)
-require('dotenv/config');
+require('dotenv').config({path: '../.env'})
 
 const client = new Client({
   intents: [
