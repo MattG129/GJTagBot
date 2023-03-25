@@ -10,6 +10,8 @@
   "description": "",
   "dependencies": {
     "discord.js": "^14.7.1",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "jquery": "^3.6.4",
+    "jsdom": "^21.1.1"
   }
 }
