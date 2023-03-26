@@ -23,23 +23,16 @@ client.on("messageCreate", (message) => {
   if (message.attachments.size > 0) {
     message.attachments.forEach((attachment) => {
 
-      var ImageURL = attachment.proxyURL;
-
       console.log(message.author.username);
       console.log(message.createdTimestamp);
       console.log(attachment.url);
     
-
       const spawn = require("child_process").spawn;
       const pythonProcess = spawn('python',['ImageToTextAPI.py', attachment.url]);
 
       pythonProcess.stdout.on('data', (data) => {
-        data.toString('utf8');
         console.log(data.toString('utf8'))
-      });
-
-      client.login(process.env.TOKEN)  
-    
+      });    
     });
   }
 });
