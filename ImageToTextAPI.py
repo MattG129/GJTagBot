@@ -21,5 +21,4 @@ r = requests.post(api_url, files=files, headers={'X-Api-Key': config['API_KEY']}
 print(r.json())
 
 
-print(r.json)
 sys.stdout.flush()
