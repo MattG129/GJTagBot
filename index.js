@@ -26,12 +26,20 @@ client.on("messageCreate", (message) => {
       console.log(message.author.username);
       console.log(message.createdTimestamp);
       console.log(attachment.url);
-    
-      const spawn = require("child_process").spawn;
-      const pythonProcess = spawn('python',['ImageToTextAPI.py', attachment.url]);
 
-      pythonProcess.stdout.on('data', (data) => {
+      // See if we can pass the arguments with names so we aren't using magic numbers in the python files
+      const spawn = require("child_process").spawn;
+      var ImageToText = spawn('python',['ImageToTextAPI.py', attachment.url]);
+
+      ImageToText.stdout.on('data', (data) => {
+        
         console.log(data.toString('utf8'))
+      
+        var Sheets = spawn('python',['SheetsAPI.py', message.author.username, message.createdTimestamp, attachment.url, data.toString('utf8')]);
+
+        Sheets.stdout.on('data', (data) => {
+            console.log(data.toString('utf8'))
+        });    
       });    
     });
   }
