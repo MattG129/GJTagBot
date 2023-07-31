@@ -20,7 +20,12 @@ client.on('ready', () => {
 });
 
 client.on("messageCreate", (message) => {
-  if (message.attachments.size > 0) {
+  console.log((['1132806976426999939', '1032196713395527700'].includes(message.channelId)))
+  console.log(1132806976426999939 == message.channelId)
+  if (
+      (message.attachments.size > 0) 
+      && (['1132806976426999939', '1032196713395527700'].includes(message.channelId))
+  ){
     message.attachments.forEach((attachment) => {
 
       console.log(message.author.username);
@@ -33,12 +38,12 @@ client.on("messageCreate", (message) => {
 
       ImageToText.stdout.on('data', (data) => {
         
-        console.log(data.toString('utf8'))
+        // console.log(data.toString('utf8'))
       
         var Sheets = spawn('python',['SheetsAPI.py', message.author.username, message.createdTimestamp, attachment.url, data.toString('utf8')]);
 
         Sheets.stdout.on('data', (data) => {
-            console.log(data.toString('utf8'))
+            // console.log(data.toString('utf8'))
         });    
       });    
     });
