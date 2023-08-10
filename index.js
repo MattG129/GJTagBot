@@ -33,7 +33,7 @@ function AnalyzeMessage(message){
          
          ImageToText.stdout.on('data', (data) => {      
             console.log(data.toString('utf8'))
-            var Sheets = spawn('python',['SheetsAPI.py', message.author.username, message.createdTimestamp, attachment.url, data.toString('utf8')]);
+            var Sheets = spawn('python',['SheetsAPI.py', message.id, attachment.id, message.author.username, message.createdTimestamp, attachment.url, data.toString('utf8')]);
             
             Sheets.stdout.on('data', (data) => {
                console.log(data.toString('utf8'))

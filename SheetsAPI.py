@@ -12,19 +12,23 @@ try:
 
         # This should ultimately read from a file in parent directory
         # Using a scuffed version of Airam's name for now. System for detecting when substrings are 'close enough' to the actual name will be implemented.
-        CrewMembers = ['Matt129', 'Casre', 'NovaPulser', 'Alram', 'Ver.Melakal']
+        CrewMembers = ['Matt129', 'Casre', 'NovaPulser', 'Alram', 'Ver.Melakal', 'RedBB', 'Airam', 'suzunya']
 
-        Tagger = sys.argv[1]
+        MessageID = sys.argv[1]
+        
+        AttachmentID = sys.argv[2]
+
+        Tagger = sys.argv[3]
 
         # Will work more on this set up or scrap it if bot can be hosted.
-        PostTime = sys.argv[2] #1682811088360
+        PostTime = sys.argv[4] #1682811088360
         PostTime = f"{datetime.fromtimestamp(int(f'{PostTime}'[:-3]))}"
 
         # Find a way to make these into hyperlinks
-        ImageURL = sys.argv[3]
+        ImageURL = sys.argv[5]
     
         # Combine all text into one string
-        Text = sys.argv[4].replace("\'", "\"")
+        Text = sys.argv[6].replace("\'", "\"")
         Text = json.loads(Text)
         Tagged = [[j for j in CrewMembers if j in i['text']] for i in Text]
         Tagged = list(itertools.chain(*Tagged))
@@ -33,7 +37,7 @@ try:
 
         Tags = {
             "values": [
-                [Tagger, i, PostTime, TimeStamp, ImageURL]
+                [Tagger, i, PostTime, TimeStamp, ImageURL, MessageID, AttachmentID]
                 for i in Tagged
             ]    
         }
