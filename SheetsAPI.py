@@ -25,7 +25,7 @@ try:
         PostTime = f"{datetime.fromtimestamp(int(f'{PostTime}'[:-3]))}"
 
         # Find a way to make these into hyperlinks
-        ImageURL = sys.argv[5]
+        ImageURL = f'=HYPERLINK("{sys.argv[5]}", "Image")'
     
         # Combine all text into one string
         Text = sys.argv[6].replace("\'", "\"")
@@ -53,8 +53,8 @@ try:
     # When we append to first row the text becomes bold. This should not be the case.
     request = Service.spreadsheets().values().append(
         spreadsheetId='1oN-BFreDodRP0biTo2Bvp3nxQnvnMblW9fCKfcp3jsA', 
-        range='Records!A2:E2', 
-        valueInputOption='RAW', 
+        range='Records!A3:E3', 
+        valueInputOption='USER_ENTERED', 
         insertDataOption='INSERT_ROWS',
         body=GetTags()
     )
