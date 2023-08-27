@@ -6,6 +6,10 @@ const dom = new jsdom.JSDOM("")
 const $ = require('jquery')(dom.window)
 require('dotenv').config({path: '../.env'})
 
+const DevMode = true
+
+const HallOfTagID = DevMode ? '1132806976426999939' : '1032196713395527700';
+
 const client = new Client({
   intents: [
       GatewayIntentBits.Guilds,
@@ -32,7 +36,7 @@ client.login(process.env.TOKEN);
 function AnalyzeMessage(message){
    if (
       message.attachments.size > 0
-      && ['1132806976426999939', '1032196713395527700'].includes(message.channelId)
+      && HallOfTagID == message.channelId
    ){
       message.attachments.forEach((attachment) => {
          console.log(message.author.username);
@@ -54,7 +58,7 @@ function AnalyzeMessage(message){
 }
 
 async function FetchAllMessages() {
-   const channel = client.channels.cache.get("1132806976426999939");
+   const channel = client.channels.cache.get(HallOfTagID);
    
    let messages = [];
 
