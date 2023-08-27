@@ -39,19 +39,13 @@ function AnalyzeMessage(message){
       && HallOfTagID == message.channelId
    ){
       message.attachments.forEach((attachment) => {
-         console.log(message.author.username);
          // See if we can pass the arguments with names so we aren't using magic numbers in the python files
          const spawn = require("child_process").spawn;
          
          var ImageToText = spawn('python',['ImageToTextAPI.py', attachment.url]);
          
          ImageToText.stdout.on('data', (data) => {      
-            console.log(data.toString('utf8'))
-            var Sheets = spawn('python',['SheetsAPI.py', message.id, attachment.id, message.author.username, message.createdTimestamp, attachment.url, data.toString('utf8')]);
-            
-            Sheets.stdout.on('data', (data) => {
-               console.log(data.toString('utf8'))
-            });    
+            var Sheets = spawn('python',['SheetsAPI.py', message.id, attachment.id, message.author.username, message.createdTimestamp, attachment.url, data.toString('utf8')]);    
          });    
       });
   }
