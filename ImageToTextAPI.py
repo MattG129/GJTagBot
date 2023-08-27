@@ -18,7 +18,11 @@ try:
     files = {'image': image_file_descriptor}
     r = requests.post(URL, files=files, headers={'X-Api-Key': config['API_KEY']})
 
-    print(r.json())
+    Text = ""
+    for i in r.json():
+        Text += i["text"]
+
+    print(Text.encode("utf-8"))
 
 except Exception as e: 
     print(f'ImageToTextAPI: {e}')

@@ -50,11 +50,12 @@ def GetTags():
     # Find a way to make these into hyperlinks
     ImageURL = f'=HYPERLINK("{sys.argv[5]}", "Image")'
 
-    # Combine all text into one string
-    Text = sys.argv[6].replace("\'", "\"")
-    Text = json.loads(Text)
-    Tagged = [[j for j in CrewMembers if j in i['text']] for i in Text]
-    Tagged = list(itertools.chain(*Tagged))
+    Text = sys.argv[6]
+    Tagged = [
+        i for i in CrewMembers 
+        if i in Text
+            and f'{i}\'s' not in Text
+    ]
 
     TimeStamp = f'{datetime.today().date()} {datetime.today().strftime("%I:%M %p")}'
 
