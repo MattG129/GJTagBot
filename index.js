@@ -62,7 +62,7 @@ async function FetchAllMessages() {
      .fetch({ limit: 1 })
      .then(messagePage => (messagePage.size === 1 ? messagePage.at(0) : null));
 
-   var MostRecentTimeStamp    = fs.readFileSync('MostRecentTimeStamp.txt', "utf-8");
+   var MostRecentTimeStamp    = fs.readFileSync('../MostRecentTimeStamp.txt', "utf-8");
    var LatestMessageTimeStamp = message.createdTimestamp;
 
    if(LatestMessageTimeStamp - MostRecentTimeStamp > 0){
@@ -87,7 +87,7 @@ async function FetchAllMessages() {
 }
 
 function UpdateMostRecentTimeStamp(TimeStamp){
-   fs.writeFile('MostRecentTimeStamp.txt', TimeStamp.toString(), err => {
+   fs.writeFile('../MostRecentTimeStamp.txt', TimeStamp.toString(), err => {
       if (err) {
          console.error(err);
       }
