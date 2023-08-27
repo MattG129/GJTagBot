@@ -17,6 +17,8 @@ const client = new Client({
 
 client.on('ready', () => {
    console.log('The bot is online');
+
+   FetchAllMessages();
 });
 
 function AnalyzeMessage(message){
@@ -44,7 +46,50 @@ function AnalyzeMessage(message){
 }
 
 client.on("messageCreate", (message) => {
-   AnalyzeMessage(message)
+   AnalyzeMessage(message);
+
+   UpdateMostRecentTimeStamp(message.createdTimestamp);
 });
+
+async function FetchAllMessages() {
+   const channel = client.channels.cache.get("1132806976426999939");
+   
+   let messages = [];
+
+   let message = await channel.messages
+     .fetch({ limit: 1 })
+     .then(messagePage => (messagePage.size === 1 ? messagePage.at(0) : null));
+
+   var MostRecentTimeStamp    = fs.readFileSync('MostRecentTimeStamp.txt', "utf-8");
+   var LatestMessageTimeStamp = message.createdTimestamp;
+
+   if(LatestMessageTimeStamp - MostRecentTimeStamp > 0){
+      AnalyzeMessage(message);
+   };
+
+   while (message) {
+      await channel.messages
+      .fetch({ limit: 100, before: message.id })
+      .then(messagePage => {
+         messagePage.forEach((msg) => {
+            if(msg.createdTimestamp - MostRecentTimeStamp > 0){
+               AnalyzeMessage(msg);
+            };
+         });
+
+         message = 0 < messagePage.size ? messagePage.at(messagePage.size - 1) : null;
+      });
+   };
+
+   UpdateMostRecentTimeStamp(LatestMessageTimeStamp);
+}
+
+function UpdateMostRecentTimeStamp(TimeStamp){
+   fs.writeFile('MostRecentTimeStamp.txt', TimeStamp.toString(), err => {
+      if (err) {
+         console.error(err);
+      }
+   });
+};
 
 client.login(process.env.TOKEN)
