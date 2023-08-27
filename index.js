@@ -49,7 +49,7 @@ function AnalyzeMessage(message){
          });    
       });
   }
-}
+};
 
 async function FetchAllMessages() {
    const channel = client.channels.cache.get(HallOfTagID);
@@ -82,7 +82,7 @@ async function FetchAllMessages() {
    };
 
    UpdateMostRecentTimeStamp(LatestMessageTimeStamp);
-}
+};
 
 function UpdateMostRecentTimeStamp(TimeStamp){
    fs.writeFile('../MostRecentTimeStamp.txt', TimeStamp.toString(), err => {
