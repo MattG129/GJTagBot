@@ -21,6 +21,14 @@ client.on('ready', () => {
    FetchAllMessages();
 });
 
+client.on("messageCreate", (message) => {
+   AnalyzeMessage(message);
+
+   UpdateMostRecentTimeStamp(message.createdTimestamp);
+});
+
+client.login(process.env.TOKEN);
+
 function AnalyzeMessage(message){
    if (
       message.attachments.size > 0
@@ -44,12 +52,6 @@ function AnalyzeMessage(message){
       });
   }
 }
-
-client.on("messageCreate", (message) => {
-   AnalyzeMessage(message);
-
-   UpdateMostRecentTimeStamp(message.createdTimestamp);
-});
 
 async function FetchAllMessages() {
    const channel = client.channels.cache.get("1132806976426999939");
@@ -91,5 +93,3 @@ function UpdateMostRecentTimeStamp(TimeStamp){
       }
    });
 };
-
-client.login(process.env.TOKEN)
