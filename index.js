@@ -6,7 +6,7 @@ const dom = new jsdom.JSDOM("")
 const $ = require('jquery')(dom.window)
 require('dotenv').config({path: '../.env'})
 
-const DevMode = true
+const DevMode = false
 
 const HallOfTagID = DevMode ? '1132806976426999939' : '1032196713395527700';
 
