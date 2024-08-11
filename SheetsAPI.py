@@ -47,7 +47,6 @@ def GetTags():
     PostTime = sys.argv[4] #1682811088360
     PostTime = f"{datetime.fromtimestamp(int(f'{PostTime}'[:-3]))}"
 
-    # Find a way to make these into hyperlinks
     ImageURL = f'=HYPERLINK("{sys.argv[5]}", "Image")'
 
     Text = sys.argv[6]
@@ -72,7 +71,6 @@ def GetTags():
 try:    
     Service = build('sheets', 'v4', credentials=creds)
 
-    # When we append to first row the text becomes bold. This should not be the case.
     request = Service.spreadsheets().values().append(
         spreadsheetId       = SHEET_ID, 
         range               = 'Records!A3:E3', 
