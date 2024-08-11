@@ -8,7 +8,8 @@ require('dotenv').config({path: '../.env'})
 
 const DevMode = false
 
-const HallOfTagID = DevMode ? '1132806976426999939' : '1032196713395527700';
+const HallOfTagID = DevMode ? process.env.TEST_HALL_OF_TAG_ID : process.env.HALL_OF_TAG_ID;
+const MostRecentTimeStampPath = DevMode ? 'MostRecentTimeStamp_Test.txt' : 'MostRecentTimeStamp.txt';
 
 const client = new Client({
   intents: [
@@ -43,7 +44,7 @@ function AnalyzeMessage(message){
          const spawn = require("child_process").spawn;
          
          var ImageToText = spawn('python',['ImageToTextAPI.py', attachment.url]);
-         
+
          ImageToText.stdout.on('data', (data) => {      
             var Sheets = spawn('python',['SheetsAPI.py', message.id, attachment.id, message.author.username, message.createdTimestamp, attachment.url, data.toString('utf8')]);    
          });    
@@ -60,7 +61,7 @@ async function FetchAllMessages() {
      .fetch({ limit: 1 })
      .then(messagePage => (messagePage.size === 1 ? messagePage.at(0) : null));
 
-   var MostRecentTimeStamp    = fs.readFileSync('../MostRecentTimeStamp.txt', "utf-8");
+   var MostRecentTimeStamp    = fs.readFileSync(MostRecentTimeStampPath, "utf-8");
    var LatestMessageTimeStamp = message.createdTimestamp;
 
    if(LatestMessageTimeStamp - MostRecentTimeStamp > 0){
@@ -85,7 +86,7 @@ async function FetchAllMessages() {
 };
 
 function UpdateMostRecentTimeStamp(TimeStamp){
-   fs.writeFile('../MostRecentTimeStamp.txt', TimeStamp.toString(), err => {
+   fs.writeFile(MostRecentTimeStampPath, TimeStamp.toString(), err => {
       if (err) {
          console.error(err);
       }

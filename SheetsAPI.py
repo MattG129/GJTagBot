@@ -2,13 +2,14 @@ import sys
 import json
 import itertools
 from datetime import datetime
+from dotenv import dotenv_values
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
 from google.oauth2 import service_account
 
+config = dotenv_values("../.env")
+
 SCOPES = ['https://www.googleapis.com/auth/spreadsheets', 'https://www.googleapis.com/auth/documents.readonly']
-SHEET_ID = '1oN-BFreDodRP0biTo2Bvp3nxQnvnMblW9fCKfcp3jsA'
-DOCUMENT_ID = '1xh41blzPdXi64NrwkSlNWk1ygUtG5TE6NwJ_PKQc7lk'
 
 creds = service_account.Credentials.from_service_account_file(
     filename = '../credentials.json', 
@@ -19,7 +20,7 @@ def GetNames():
     Service = build('docs', 'v1', credentials=creds)
 
     # Retrieve the documents contents from the Docs service.
-    Document = Service.documents().get(documentId=DOCUMENT_ID).execute()
+    Document = Service.documents().get(documentId=config['DOCUMENT_ID']).execute()
 
     Elements = Document.get('body')['content']
     
@@ -72,7 +73,7 @@ try:
     Service = build('sheets', 'v4', credentials=creds)
 
     request = Service.spreadsheets().values().append(
-        spreadsheetId       = SHEET_ID, 
+        spreadsheetId       = config['SHEET_ID'], 
         range               = 'Records!A3:E3', 
         valueInputOption    = 'USER_ENTERED', 
         insertDataOption    = 'INSERT_ROWS',
